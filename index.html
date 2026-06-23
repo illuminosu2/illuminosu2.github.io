@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Readerrr</title>
+  <style>
+    :root{
+      --bg:#f5f7fb;--card:rgba(255,255,255,.82);--text:#101828;--muted:#667085;--line:#d9e0ec;--accent:#4f46e5;--accent2:#06b6d4;--danger:#ef4444;--shadow:0 18px 60px rgba(15,23,42,.12);
+    }
+    [data-theme="dark"]{--bg:#090d18;--card:rgba(18,24,38,.82);--text:#eef2ff;--muted:#9aa4b2;--line:#263247;--accent:#8b5cf6;--accent2:#22d3ee;--shadow:0 18px 60px rgba(0,0,0,.35)}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(79,70,229,.16),transparent 32%),var(--bg);color:var(--text);min-height:100vh}button,input,select{font:inherit}button{border:0;cursor:pointer}.app{max-width:1100px;margin:0 auto;padding:18px 18px 92px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}h1{font-size:26px;margin:0}.tag{margin:2px 0 0;color:var(--muted);font-size:14px}.pill{padding:10px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--text)}.grid{display:grid;grid-template-columns:340px 1fr;gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(18px)}.panel{padding:18px}.upload{border:1.5px dashed var(--line);border-radius:22px;padding:18px;text-align:center;background:rgba(255,255,255,.05)}.upload input{width:100%;margin-top:12px}.hint{color:var(--muted);font-size:13px;line-height:1.45}.doc-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}.doc{width:100%;padding:13px;border-radius:18px;background:rgba(127,127,127,.07);border:1px solid var(--line);text-align:left;color:var(--text)}.doc.active{outline:2px solid var(--accent)}.doc strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.doc span{color:var(--muted);font-size:12px}.reader{min-height:620px;display:flex;flex-direction:column;overflow:hidden}.reader-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px;border-bottom:1px solid var(--line)}.reader-title{min-width:0}.reader-title strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.reader-title span{color:var(--muted);font-size:13px}.stage{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:26px;position:relative}.word{font-weight:800;letter-spacing:.01em;line-height:1.05;min-height:1.1em}.focus{color:var(--danger)}.empty{color:var(--muted);max-width:420px;line-height:1.55}.progress-wrap{padding:0 18px 14px}.bar{height:10px;background:rgba(127,127,127,.14);border-radius:999px;overflow:hidden}.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .18s linear}.controls{padding:16px 18px 20px;border-top:1px solid var(--line);display:grid;gap:14px}.buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.btn{padding:12px 16px;border-radius:16px;background:rgba(127,127,127,.1);color:var(--text);border:1px solid var(--line)}.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:0}.settings{display:grid;grid-template-columns:1fr 1fr;gap:14px}.control label{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:8px}.control input[type="range"]{width:100%;accent-color:var(--accent)}.control select{width:100%;padding:10px 12px;border-radius:14px;background:rgba(127,127,127,.08);color:var(--text);border:1px solid var(--line)}.bottom{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;background:rgba(20,25,38,.72);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);border-radius:999px;padding:8px;box-shadow:var(--shadow);z-index:5}.nav{padding:11px 16px;border-radius:999px;background:transparent;color:white}.nav.active{background:rgba(255,255,255,.18)}.toast{position:fixed;left:50%;top:16px;transform:translateX(-50%);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;box-shadow:var(--shadow);display:none;z-index:9}.toast.show{display:block}.hidden{display:none!important}@media(max-width:820px){.grid{grid-template-columns:1fr}.reader{min-height:590px}.top{align-items:flex-start}.settings{grid-template-columns:1fr}.word{font-size:64px!important}.app{padding-inline:12px}}
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+  <main class="app" data-theme="light" id="app">
+    <header class="top">
+      <div class="brand"><div class="logo"></div><div><h1>Readerrr</h1><p class="tag">RSVP speed reading in your browser</p></div></div>
+      <button class="pill" id="themeBtn">Dark mode</button>
+    </header>
+
+    <section class="grid">
+      <aside class="card panel" id="libraryPanel">
+        <h2>Library</h2>
+        <div class="upload">
+          <strong>Upload a file</strong>
+          <p class="hint">Works best with .txt. PDF and DOCX use browser libraries loaded from CDN.</p>
+          <input id="fileInput" type="file" accept=".txt,.md,.html,.htm,.pdf,.docx,.epub,.csv,.json,.rtf,text/*" />
+        </div>
+        <div class="doc-list" id="docList"></div>
+      </aside>
+
+      <section class="card reader" id="readerPanel">
+        <div class="reader-head">
+          <div class="reader-title"><strong id="docTitle">No file selected</strong><span id="docMeta">Upload or choose a document</span></div>
+          <button class="btn" id="clearBtn">Clear library</button>
+        </div>
+        <div class="stage">
+          <div class="empty" id="emptyText">Upload a text file, open it, then press play. Words will appear here one at a time.</div>
+          <div class="word hidden" id="wordBox"></div>
+        </div>
+        <div class="progress-wrap"><div class="bar"><div id="progressBar"></div></div></div>
+        <div class="controls">
+          <div class="buttons">
+            <button class="btn" id="backBtn">↶ Back</button>
+            <button class="btn primary" id="playBtn">▶ Play</button>
+            <button class="btn" id="forwardBtn">Forward ↷</button>
+            <button class="btn" id="restartBtn">Restart</button>
+          </div>
+          <div class="settings">
+            <div class="control"><label><span>Speed</span><strong><span id="wpmOut">300</span> WPM</strong></label><input id="wpm" type="range" min="50" max="1000" step="10" value="300"></div>
+            <div class="control"><label><span>Font size</span><strong><span id="sizeOut">84</span>px</strong></label><input id="fontSize" type="range" min="38" max="150" step="2" value="84"></div>
+            <div class="control"><label><span>Jump size</span><strong>words</strong></label><input id="jump" type="range" min="5" max="100" step="5" value="20"></div>
+            <div class="control"><label><span>Theme</span></label><select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <nav class="bottom"><button class="nav active" id="navReader">Reader</button><button class="nav" id="navLibrary">Library</button></nav>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const state = { docs: [], activeId: null, words: [], index: 0, playing: false, timer: null, wpm: 300, fontSize: 84, theme: 'light', jump: 20 };
+    const save = () => localStorage.setItem('readerrr-state-v2', JSON.stringify({docs: state.docs, activeId: state.activeId, index: state.index, wpm: state.wpm, fontSize: state.fontSize, theme: state.theme, jump: state.jump}));
+    const load = () => { try { Object.assign(state, JSON.parse(localStorage.getItem('readerrr-state-v2') || '{}')); } catch {} };
+    const toast = msg => { $('toast').textContent = msg; $('toast').classList.add('show'); setTimeout(()=>$('toast').classList.remove('show'), 2400); };
+    const splitWords = text => text.replace(/\s+/g,' ').trim().match(/\S+/g) || [];
+    const focusIndex = word => { const letters = word.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,''); const len = [...letters].length || [...word].length; if(len <= 1) return 0; if(len <= 5) return 1; if(len <= 9) return 2; return Math.floor(len * 0.35); };
+    const renderFocusWord = word => { const chars = [...word]; const firstWordChar = chars.findIndex(ch => /[\p{L}\p{N}]/u.test(ch)); const idx = Math.max(0, (firstWordChar < 0 ? 0 : firstWordChar) + focusIndex(word)); return chars.map((ch,i)=> i===idx ? `<span class="focus">${escapeHtml(ch)}</span>` : escapeHtml(ch)).join(''); };
+    const escapeHtml = s => s.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    function setActive(doc){ state.activeId = doc.id; state.words = splitWords(doc.text); state.index = Math.min(state.index || 0, Math.max(0, state.words.length-1)); $('docTitle').textContent = doc.name; $('docMeta').textContent = `${state.words.length.toLocaleString()} words`; $('emptyText').classList.add('hidden'); $('wordBox').classList.remove('hidden'); render(); save(); }
+    function currentDoc(){ return state.docs.find(d => d.id === state.activeId); }
+    function render(){
+      $('wpm').value = state.wpm; $('wpmOut').textContent = state.wpm; $('fontSize').value = state.fontSize; $('sizeOut').textContent = state.fontSize; $('theme').value = state.theme; $('jump').value = state.jump; document.documentElement.dataset.theme = state.theme; $('app').dataset.theme = state.theme; $('themeBtn').textContent = state.theme === 'dark' ? 'Light mode' : 'Dark mode'; $('wordBox').style.fontSize = state.fontSize + 'px';
+      const doc = currentDoc();
+      if(!doc || !state.words.length){ $('wordBox').classList.add('hidden'); $('emptyText').classList.remove('hidden'); $('progressBar').style.width='0%'; }
+      else { $('wordBox').classList.remove('hidden'); $('emptyText').classList.add('hidden'); $('wordBox').innerHTML = renderFocusWord(state.words[state.index] || ''); $('progressBar').style.width = ((state.index + 1) / state.words.length * 100) + '%'; $('docTitle').textContent = doc.name; $('docMeta').textContent = `${state.index+1}/${state.words.length} words`; }
+      $('playBtn').textContent = state.playing ? '⏸ Pause' : '▶ Play';
+      renderDocs();
+    }
+    function renderDocs(){ $('docList').innerHTML = state.docs.length ? '' : '<p class="hint">No files yet. Upload one to start.</p>'; state.docs.forEach(doc=>{ const b=document.createElement('button'); b.className='doc'+(doc.id===state.activeId?' active':''); b.innerHTML=`<strong>${escapeHtml(doc.name)}</strong><span>${splitWords(doc.text).length.toLocaleString()} words</span>`; b.onclick=()=>{ state.index=0; setActive(doc); }; $('docList').appendChild(b); }); }
+    function stop(){ state.playing=false; clearTimeout(state.timer); state.timer=null; render(); save(); }
+    function tick(){ if(!state.playing) return; if(!state.words.length) return stop(); if(state.index >= state.words.length - 1) return stop(); state.index++; render(); save(); state.timer = setTimeout(tick, 60000 / state.wpm); }
+    function play(){ if(!state.words.length){ toast('Upload and open a file first'); return; } state.playing=true; render(); clearTimeout(state.timer); state.timer = setTimeout(tick, 60000 / state.wpm); }
+    async function loadScript(src){ return new Promise((res,rej)=>{ if(document.querySelector(`script[src="${src}"]`)) return res(); const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+    async function extractText(file){
+      const name = file.name.toLowerCase();
+      if(name.endsWith('.pdf')){ await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs').catch(()=>{}); if(!window.pdfjsLib) throw new Error('PDF library blocked. Try a TXT file.'); pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs'; const buf=await file.arrayBuffer(); const pdf=await pdfjsLib.getDocument({data:buf}).promise; let out=''; for(let i=1;i<=pdf.numPages;i++){ const page=await pdf.getPage(i); const content=await page.getTextContent(); out += content.items.map(x=>x.str).join(' ') + '\n'; } return out; }
+      if(name.endsWith('.docx')){ await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js'); if(!window.mammoth) throw new Error('DOCX library blocked. Try a TXT file.'); const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()}); return result.value; }
+      if(name.endsWith('.epub')){ const text = await file.text(); return text.replace(/<[^>]+>/g,' '); }
+      return await file.text();
+    }
+    $('fileInput').onchange = async e => { const file = e.target.files[0]; if(!file) return; try{ toast('Reading file...'); const text = await extractText(file); const words = splitWords(text); if(!words.length) throw new Error('No readable text found.'); const doc={id:crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), name:file.name, text, created:Date.now()}; state.docs.unshift(doc); state.index=0; setActive(doc); toast('File added'); } catch(err){ toast(err.message || 'Could not read file'); } e.target.value=''; };
+    $('playBtn').onclick = () => state.playing ? stop() : play(); $('restartBtn').onclick=()=>{state.index=0; render(); save();}; $('backBtn').onclick=()=>{state.index=Math.max(0,state.index-state.jump); render(); save();}; $('forwardBtn').onclick=()=>{state.index=Math.min(Math.max(0,state.words.length-1),state.index+state.jump); render(); save();}; $('wpm').oninput=e=>{state.wpm=Number(e.target.value); render(); save(); if(state.playing){ clearTimeout(state.timer); state.timer=setTimeout(tick,60000/state.wpm); }}; $('fontSize').oninput=e=>{state.fontSize=Number(e.target.value); render(); save();}; $('jump').oninput=e=>{state.jump=Number(e.target.value); save();}; $('theme').onchange=e=>{state.theme=e.target.value; render(); save();}; $('themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark'; render(); save();}; $('clearBtn').onclick=()=>{ if(confirm('Delete all uploaded files from this browser?')){ stop(); state.docs=[]; state.activeId=null; state.words=[]; state.index=0; render(); save(); }};
+    $('navLibrary').onclick=()=>{ document.querySelector('.grid').scrollIntoView({behavior:'smooth'}); }; $('navReader').onclick=()=>{ $('readerPanel').scrollIntoView({behavior:'smooth'}); };
+    load(); const doc=currentDoc(); if(doc) setActive(doc); render();
+  </script>
+</body>
+</html>
